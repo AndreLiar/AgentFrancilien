@@ -1,11 +1,10 @@
 
 
-```markdown
 # 🧠 Agent Francilien
 
 **Agent Francilien** est une application full-stack (FastAPI + Streamlit) qui collecte, résume et stocke des actualités locales en Île-de-France à l’aide de SerpAPI et Ollama (Gemma3). Elle propose deux modes de résumé : un pipeline direct SerpAPI → Ollama, et un agent ReAct LangChain à deux outils (SerpAPI + Summarizer).
 
----
+
 
 ## 🚀 Fonctionnalités
 
@@ -18,7 +17,7 @@
 - **Planificateur** (APScheduler) pour résumé automatique quotidien  
 - **UI Streamlit** moderne : onglets, pagination, expandeurs, session state  
 
----
+
 
 ## 🔧 Prérequis
 
@@ -45,7 +44,7 @@ Et ajoutez `.env` à votre `.gitignore`.
 
 ```bash
 # Cloner
-git clone https://github.com/TON_ORG/AgentFrancilien.git
+git clone https://github.com/AndreLiar/AgentFrancilien.git
 cd AgentFrancilien
 
 # Installer deps
