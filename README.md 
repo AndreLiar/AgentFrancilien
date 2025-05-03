@@ -1,0 +1,99 @@
+
+
+```markdown
+# 🧠 Agent Francilien
+
+**Agent Francilien** est une application full-stack (FastAPI + Streamlit) qui collecte, résume et stocke des actualités locales en Île-de-France à l’aide de SerpAPI et Ollama (Gemma3). Elle propose deux modes de résumé : un pipeline direct SerpAPI → Ollama, et un agent ReAct LangChain à deux outils (SerpAPI + Summarizer).
+
+---
+
+## 🚀 Fonctionnalités
+
+- **Collecte d’actualités** via SerpAPI (5 premiers résultats)
+- **Deux modes de résumé**  
+  1. **Résumé SerpAPI** : fetch → résumé  
+  2. **Agent intelligent** (ReAct) : Thought→Action(SerpAPI)→Observation→Action(Summarizer)→Final Answer  
+- **Stockage** des résumés dans une base SQLite (`summaries.db`)  
+- **API REST** pour récupérer et créer des résumés  
+- **Planificateur** (APScheduler) pour résumé automatique quotidien  
+- **UI Streamlit** moderne : onglets, pagination, expandeurs, session state  
+
+---
+
+## 🔧 Prérequis
+
+- Python 3.9+
+- [Ollama CLI](https://ollama.com) installé et modèle `gemma3` téléchargé
+- Clé SerpAPI (inscrivez-vous sur https://serpapi.com)
+- `pip install -r requirements.txt`
+
+---
+
+## 🔐 Variables d’environnement
+
+Créez un fichier `.env` à la racine :
+
+```dotenv
+SERPAPI_API_KEY=ta_cle_serpapi_ici
+````
+
+Et ajoutez `.env` à votre `.gitignore`.
+
+---
+
+## 🚀 Installation & lancement
+
+```bash
+# Cloner
+git clone https://github.com/TON_ORG/AgentFrancilien.git
+cd AgentFrancilien
+
+# Installer deps
+pip install -r requirements.txt
+
+# Lancer le backend (FastAPI)
+uvicorn agent_backend.main:app --reload
+
+# Dans un autre terminal, lancer la UI Streamlit
+streamlit run frontend/app.py
+```
+
+L’API sera dispo sur `http://localhost:8000`, et l’interface sur `http://localhost:8501`.
+
+---
+
+## 🛠️ Endpoints API
+
+| Méthode | Route             | Description                                       |
+| ------- | ----------------- | ------------------------------------------------- |
+| GET     | `/summaries`      | Récupère les derniers résumés (limit, pagination) |
+| POST    | `/summarize`      | Résume manuellement une liste de snippets         |
+| POST    | `/serp-summarize` | Pipeline SerpAPI→résumé direct                    |
+| POST    | `/serp-agent`     | Pipeline Agent ReAct complet                      |
+
+### Exemple curl
+
+```bash
+curl -X POST http://localhost:8000/serp-summarize
+```
+
+---
+
+## 📚 Interface Streamlit
+
+* **Onglet 1 (“Résumé SerpAPI”)** : déclenche le résumé direct
+* **Onglet 2 (“Agent intelligent”)** : déclenche l’agent ReAct
+* **Ancien résumés** : affichés en expandeurs, avec flèches de pagination en sidebar
+
+---
+
+## 🔮 Perspectives
+
+* Mettre en cache les appels SerpAPI
+* Gérer quotas / erreurs réseau plus finement
+* Passer à [LangGraph](https://langchain-ai.github.io/langgraph/) pour un agent plus flexible
+* Ajouter authentification / interface utilisateur plus riche
+
+---
+
+
